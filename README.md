@@ -8,7 +8,11 @@
   <li>Update the image path in the <code>main.py</code> file to the name of the image you want to analyze:</li>
   <pre><code>image_path = 'data/labels/your_image_name.png'  <!-- Update with your image path --></code></pre>
   <li>Run the program and follow the prompts to analyze the food label and receive feedback on potential dietary concerns.</li>
+  <li>If you want to test the accuracy of the OCR extraction, you can use the <code>test_ocr.py</code> script. Simply update the image path in <code>test_ocr.py</code> to the image you want to test:</li>
+  <pre><code>image_path = 'data/labels/your_image_name.png'  <!-- Update with your image path --></code></pre>
+  <li>Run <code>test_ocr.py</code> to see the extracted text and verify its accuracy. The script will output the text detected from the image to the console, allowing you to compare it with the actual content on the label.</li>
 </ul>
+
 
 <br>
 
