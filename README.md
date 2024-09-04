@@ -41,7 +41,7 @@
 <ol>
   <li>Install the required Python packages using pip:</li>
   <pre><code>pip install opencv-python-headless pandas pytesseract</code></pre>
-  <li>Add your own food label images to the <code>data/labels/</code> folder.</li>
+  <li>Add your own food label images to the <code>data/labels/</code> folder or use the given 4.</li>
   <li>Update the image path in <code>main.py</code>:</li>
   <pre><code>image_path = 'data/labels/your_image_name.png'</code></pre>
   <li>Run the program:</li>
