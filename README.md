@@ -7,7 +7,7 @@
   <li>Upload a clear and legible image of a food label to the <code>data/labels/</code> folder. Ensure that the text in the image is not blurry for better accuracy.</li>
   <li>Update the image path in the <code>main.py</code> file to the name of the image you want to analyze:</li>
   <pre><code>image_path = 'data/labels/your_image_name.png'  <!-- Update with your image path --></code></pre>
-  <li>Run the program and follow the prompts to analyze the food label and receive feedback on potential dietary concerns and alternative suggestions.</li>
+  <li>Run the program and follow the prompts to analyze the food label and receive feedback on potential dietary concerns.</li>
 </ul>
 
 <h2>⚠️ Disclaimer</h2>
@@ -21,7 +21,7 @@
 <h2>🚀 How to Run NutriAID</h2>
 <h3>Prerequisites</h3>
 <ul>
-  <li>Ensure you have <strong>Python 3.x</strong> installed on your system.</li>
+  <li>Ensure you have <strong>Python 3</strong> installed on your system.</li>
   <li>Install the necessary Python packages:</li>
   <pre><code>pip install opencv-python-headless pandas pytesseract</code></pre>
   <li>Install <strong>Tesseract-OCR</strong>:</li>
