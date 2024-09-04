@@ -10,6 +10,8 @@
   <li>Run the program and follow the prompts to analyze the food label and receive feedback on potential dietary concerns.</li>
 </ul>
 
+<br>
+
 <h2>⚠️ Disclaimer</h2>
 <p>Please note the following:</p>
 <ul>
@@ -17,6 +19,8 @@
   <li><strong>OCR Precision:</strong> The OCR used for text extraction is not always precise or perfect. Some text may not be accurately captured or interpreted.</li>
   <li><strong>Not for Actual Use:</strong> NutriAID is intended for demonstration and educational purposes only. Do not rely on it for making actual dietary or health decisions.</li>
 </ul>
+
+<br>
 
 <h2>🚀 How to Run NutriAID</h2>
 <h3>Prerequisites</h3>
