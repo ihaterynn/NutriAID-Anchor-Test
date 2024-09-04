@@ -46,5 +46,4 @@
   <pre><code>image_path = 'data/labels/your_image_name.png'</code></pre>
   <li>Run the program:</li>
   <pre><code>python main.py</code></pre>
-  <li>View the results and suggested alternatives.</li>
 </ol>
