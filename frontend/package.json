@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@solana/wallet-adapter-react": "^0.15.35",
+    "axios": "^1.7.7"
+  }
+}
