@@ -1,53 +1,54 @@
 # NutriAID
 
-<p>Welcome to <strong>NutriAID</strong>, a Python-based application designed to help users make informed dietary choices by analyzing food labels. The program uses Optical Character Recognition (OCR) to extract text from food label images and assess the content against predefined health conditions and dietary preferences.</p>
+NutriAID is a Node.js application that helps users make informed dietary choices by analyzing food labels using Optical Character Recognition (OCR).
 
-<h2>🛠️ How to Use</h2>
-<ul>
-  <li>Upload a clear and legible image of a food label to the <code>data/labels/</code> folder. Ensure that the text in the image is not blurry for better accuracy.</li>
-  <li>Update the image path in the <code>main.py</code> file to the name of the image you want to analyze:</li>
-  <pre><code>image_path = 'data/labels/your_image_name.png'  <!-- Update with your image path --></code></pre>
-  <li>Run the program and follow the prompts to analyze the food label and receive feedback on potential dietary concerns.</li>
-  <li>If you want to test the accuracy of the OCR extraction, you can use the <code>test_ocr.py</code> script. Simply update the image path in <code>test_ocr.py</code> to the image you want to test:</li>
-  <pre><code>image_path = 'data/labels/your_image_name.png'  <!-- Update with your image path --></code></pre>
-  <li>Run <code>test_ocr.py</code> to see the extracted text and verify its accuracy. The script will output the text detected from the image to the console, allowing you to compare it with the actual content on the label.</li>
-</ul>
+## Prerequisites
 
+- Node.js (version 14.x or later recommended)
+- npm (usually comes with Node.js)
 
-<br>
+## Installation and Running
 
-<h2>⚠️ Disclaimer</h2>
-<p>Please note the following:</p>
-<ul>
-  <li><strong>Basic Functionalities:</strong> NutriAID is a prototype and includes only basic functionalities.</li>
-  <li><strong>OCR Precision:</strong> The OCR used for text extraction is not always precise or perfect. Some text may not be accurately captured or interpreted.</li>
-  <li><strong>Not for Actual Use:</strong> NutriAID is intended for demonstration and educational purposes only. Do not rely on it for making actual dietary or health decisions.</li>
-</ul>
+1. Clone the repository and navigate to the project directory.
 
-<br>
+2. Install dependencies:
+   ```
+   npm install
+   ```
 
-<h2>🚀 How to Run NutriAID</h2>
-<h3>Prerequisites</h3>
-<ul>
-  <li>Ensure you have <strong>Python 3</strong> installed on your system.</li>
-  <li>Install the necessary Python packages:</li>
-  <pre><code>pip install opencv-python-headless pandas pytesseract</code></pre>
-  <li>Install <strong>Tesseract-OCR</strong>:</li>
-  <ul>
-    <li><strong>Windows:</strong> Download the installer from <a href="https://github.com/tesseract-ocr/tesseract">here</a> and follow the installation instructions.</li>
-    <li><strong>Mac:</strong> Use Homebrew:</li>
-    <pre><code>brew install tesseract</code></pre>
-    <li><strong>Linux:</strong> Install via your package manager:</li>
-    <pre><code>sudo apt-get install tesseract-ocr</code></pre>
-  </ul>
-</ul>
-<h3>Steps to Run:</h3>
-<ol>
-  <li>Install the required Python packages using pip:</li>
-  <pre><code>pip install opencv-python-headless pandas pytesseract</code></pre>
-  <li>Add your own food label images to the <code>data/labels/</code> folder or use the given 4.</li>
-  <li>Update the image path in <code>main.py</code>:</li>
-  <pre><code>image_path = 'data/labels/your_image_name.png'</code></pre>
-  <li>Run the program:</li>
-  <pre><code>python main.py</code></pre>
-</ol>
+3. Start the application:
+   ```
+   npm start
+   ```
+
+   This will start both the backend server (on port 3001) and the frontend development server (on port 3000).
+
+4. Open your web browser and go to `http://localhost:3000` to use the application.
+
+## Usage
+
+1. Upload a clear, legible image of a food label.
+2. Follow the prompts to analyze the label and receive dietary feedback.
+
+## Troubleshooting
+
+If you encounter issues:
+
+1. Ensure you're using a compatible Node.js version.
+2. Try cleaning the npm cache and reinstalling:
+   ```
+   npm cache clean --force
+   npm install
+   ```
+
+## ⚠️ Disclaimer
+
+- NutriAID is a prototype with basic functionalities.
+- OCR text extraction may not always be precise.
+- This application is for demonstration and educational purposes only. Do not use it for actual dietary or health decisions.
+
+## Contributing
+
+To contribute, fork this repository, create a branch, make your changes, and submit a pull request.
+
+For more details, see the [GitHub guide on creating a pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).

@@ -2,12 +2,14 @@ const express = require('express');
 const multer = require('multer');
 const Tesseract = require('tesseract.js');
 const { analyzeIngredients } = require('./textAnalysis');
-const { checkCalories } = require('./calories'); // Assuming you have a calories module
+const { checkCalories } = require('./main'); // Assuming you have a main module
 const { Connection, PublicKey } = require('@solana/web3.js');
 require('dotenv').config();
+const cors = require('cors');
 
 const app = express();
 app.use(express.json());  // To parse incoming JSON requests
+app.use(cors());
 
 // Configure Multer for file uploads
 const upload = multer({ dest: 'uploads/' });
@@ -58,7 +60,7 @@ app.post('/upload', upload.single('label'), async (req, res) => {
 });
 
 // Server setup
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });

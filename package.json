@@ -1,0 +1,15 @@
+{
+    "name": "nutriaid",
+    "version": "1.0.0",
+    "scripts": {
+        "install": "npm run install:backend && npm run install:frontend",
+        "install:backend": "cd backend && npm install",
+        "install:frontend": "cd frontend && npm install",
+        "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+        "start:backend": "cd backend && npm start",
+        "start:frontend": "cd frontend && npm start"
+    },
+    "devDependencies": {
+        "concurrently": "^6.2.0"
+    }
+}
