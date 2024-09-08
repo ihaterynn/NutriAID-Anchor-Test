@@ -60,7 +60,7 @@ app.post('/upload', upload.single('label'), async (req, res) => {
 });
 
 // Server setup
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
