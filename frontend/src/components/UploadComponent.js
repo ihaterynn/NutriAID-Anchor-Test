@@ -1,27 +1,57 @@
 import React, { useState } from 'react';
+import { extractText } from '../utils/imageProcessing';
+import { analyzeIngredients, checkCalories } from '../utils/textAnalysis';
 
-const UploadComponent = () => {
+const UploadComponent = ({ onAnalysisComplete }) => {
   const [file, setFile] = useState(null);
+  const [healthConditions, setHealthConditions] = useState([]);
+  const [weightGoal, setWeightGoal] = useState('maintain');
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
 
-  const handleSubmit = (e) => {
+  const handleHealthConditionChange = (e) => {
+    const condition = e.target.value;
+    setHealthConditions(prev => 
+      e.target.checked 
+        ? [...prev, condition] 
+        : prev.filter(c => c !== condition)
+    );
+  };
+
+  const handleWeightGoalChange = (e) => {
+    setWeightGoal(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append('file', file);
+    try {
+      const text = await extractText(file);
+      const { result, conditionWarnings, potentialHarmWarnings } = analyzeIngredients(text, healthConditions);
+      const calorieWarning = checkCalories(text, weightGoal);
 
-    // Use fetch or axios to send the file to the backend
-    fetch('/upload', {
-      method: 'POST',
-      body: formData,
-    })
-    .then((response) => response.json())
-    .then((data) => console.log(data))
-    .catch((error) => console.error(error));
+      const labeledWarnings = [];
+      if (conditionWarnings.includes('sugar')) {
+        labeledWarnings.push('Diabetes (sugar)');
+      }
+      if (conditionWarnings.includes('salt')) {
+        labeledWarnings.push('High Blood Pressure (salt)');
+      }
+      if (calorieWarning) {
+        labeledWarnings.push(calorieWarning);
+      }
+
+      onAnalysisComplete({
+        recommendation: result,
+        concerns: labeledWarnings,
+        harmfulIngredients: potentialHarmWarnings,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -29,7 +59,33 @@ const UploadComponent = () => {
       <h2>Upload File</h2>
       <form onSubmit={handleSubmit}>
         <input type="file" onChange={handleFileChange} />
-        <button type="submit">Upload</button>
+        <div>
+          <label>
+            <input
+              type="checkbox"
+              value="diabetes"
+              onChange={handleHealthConditionChange}
+            />
+            Diabetes
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              value="high blood pressure"
+              onChange={handleHealthConditionChange}
+            />
+            High Blood Pressure
+          </label>
+        </div>
+        <div>
+          <label>Weight Goal:</label>
+          <select value={weightGoal} onChange={handleWeightGoalChange}>
+            <option value="maintain">Maintain</option>
+            <option value="gain">Gain</option>
+            <option value="lose">Lose</option>
+          </select>
+        </div>
+        <button type="submit">Analyze</button>
       </form>
     </div>
   );

@@ -1,0 +1,6 @@
+[
+    {"ingredient": "sugar", "harmful_for": "diabetes"},
+    {"ingredient": "salt", "harmful_for": "high blood pressure"},
+    {"ingredient": "trans fat", "harmful_for": "all"},
+    {"ingredient": "high fructose corn syrup", "harmful_for": "all"}
+  ]
