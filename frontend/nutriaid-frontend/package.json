@@ -2,7 +2,7 @@
   "name": "nutriaid-frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Eddy3129.github.io/NutriAID",
+  "homepage": "https://ihaterynn.github.io/NutriAID",
   "dependencies": {
     "@solana/wallet-adapter-react": "^0.15.35",
     "axios": "^1.7.7",
