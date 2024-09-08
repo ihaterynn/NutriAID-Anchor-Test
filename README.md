@@ -1,5 +1,7 @@
 # NutriAID
 
+Test
+
 NutriAID is a Node.js application that helps users make informed dietary choices by analyzing food labels using Optical Character Recognition (OCR).
 
 ## Prerequisites
