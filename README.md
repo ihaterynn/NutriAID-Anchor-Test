@@ -1,74 +1,81 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
+# NutriAID 🍏
 
-<h1>NutriAID 🍏</h1>
+NutriAID is a React application that helps users make informed dietary choices by analyzing food labels using Optical Character Recognition (OCR) and Solana blockchain integration.
 
-<p>NutriAID is a React application that helps users make informed dietary choices by analyzing food labels using Optical Character Recognition (OCR).</p>
+## Prerequisites
 
-<h2>🔧 Prerequisites</h2>
-<ul>
-    <li>Node.js (version 14.x or later recommended)</li>
-    <li>npm (usually comes with Node.js)</li>
-</ul>
+- Windows Subsystem for Linux (WSL) or a Linux/macOS environment
+- Node.js (v14 or later)
+- npm (usually comes with Node.js)
 
-<h2>🚀 Installation and Running</h2>
-<ol>
-    <li>Clone the repository and navigate to the project directory.</li>
-    <br>
-    <li>Install all dependencies:
-        <pre><code>npm run install-all</code></pre>
-    </li>
-    <br>
-    <li>Build the Solana program:
-        <pre><code>npm run build-solana</code></pre>
-    </li>
-    <br>
-    <li>Start the development servers:
-        <pre><code>npm start</code></pre>
-        This will start both the frontend and backend servers concurrently.
-        Open your web browser and go to <a href="http://localhost:3000">http://localhost:3000</a> to use the application.</li>
-    <br>
-    <li>To deploy the frontend to GitHub Pages: 
-    <pre><code>npm run deploy</code></pre>
-    GitHub Pages: 
-    <a href="https://ihaterynn.github.io/NutriAID/" target="_blank">
-        https://ihaterynn.github.io/NutriAID/
-    </a>
-    </li>
+## Quick Start
 
-</ol>
+For Windows users with WSL installed, or Linux/macOS users:
 
-<h2>🥗 Usage</h2>
-<ol>
-    <li>Upload a clear, legible image of a food label.</li>
-    <li>Follow the prompts to analyze the label and receive dietary feedback.</li>
-</ol>
+1. Clone the repository:
+   ```
+   git clone https://github.com/your-username/NutriAID.git
+   cd NutriAID
+   ```
 
-<h2>🛠️ Troubleshooting</h2>
-<p>If you encounter issues:</p>
-<ol>
-    <li>Ensure you're using a compatible Node.js version.</li>
-    <li>Try cleaning the npm cache and reinstalling:
-        <pre><code>npm cache clean --force
-npm install</code></pre>
-    </li>
-</ol>
+2. Run the setup script:
+   ```
+   npm run setup
+   ```
 
-<h2>⚠️ Disclaimer</h2>
-<ul>
-    <li>NutriAID is a prototype with basic functionalities.</li>
-    <li>OCR text extraction may not always be precise.</li>
-    <li>This application is for demonstration and educational purposes only. Do not use it for actual dietary or health decisions.</li>
-</ul>
+3. Start the development servers:
+   ```
+   npm start
+   ```
 
-<h2>🤝 Contributing</h2>
-<p>To contribute, fork this repository, create a branch, make your changes, and submit a pull request.</p>
-<p>For more details, see the <a href="https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request">GitHub guide on creating a pull request</a>.</p>
+4. Open your web browser and go to http://localhost:3000 to use the application.
 
-</body>
-</html>
+## Manual Setup
+
+If the quick start doesn't work for you, follow these steps:
+
+1. Ensure you have the following installed:
+   - Rust and Cargo
+   - Solana CLI tools
+   - Anchor framework
+
+2. Clone the repository and navigate to the project directory.
+
+3. Install all dependencies:
+   ```
+   npm run install-all
+   ```
+
+4. Build the Solana program:
+   ```
+   npm run build-solana
+   ```
+
+5. Start the development servers:
+   ```
+   npm start
+   ```
+
+## Deployment
+
+To deploy the frontend to GitHub Pages:
+npm run deploy
+GitHub Pages: https://ihaterynn.github.io/NutriAID/ 
+
+
+## Troubleshooting
+
+If you encounter any issues:
+- Ensure all prerequisites are correctly installed
+- Make sure you're using the correct versions of Node.js, Rust, and Solana
+- Check that your Solana wallet is properly configured for devnet
+
+For more detailed instructions or if you're new to Solana development, please refer to our [Detailed Setup Guide](link-to-guide).
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

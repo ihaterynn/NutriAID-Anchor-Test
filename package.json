@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "description": "NutriAID project with Solana integration",
     "scripts": {
+    "setup": "bash setup.sh",
       "install-all": "npm install && npm run install-frontend && npm run install-backend && npm run install-solana",
       "install-frontend": "cd frontend && npm install",
       "install-backend": "cd backend && npm install",

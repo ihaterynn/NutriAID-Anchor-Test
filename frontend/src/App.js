@@ -13,8 +13,18 @@ require('@solana/wallet-adapter-react-ui/styles.css');
 const WalletConnectButton = () => {
   const { connect, connected } = useWallet();
 
+  const handleConnect = async () => {
+    console.log("Attempting to connect...");
+    try {
+      await connect();
+      console.log("Connection successful");
+    } catch (error) {
+      console.error("Connection failed:", error);
+    }
+  };
+
   return (
-    <button onClick={connect} disabled={connected}>
+    <button onClick={handleConnect} disabled={connected}>
       {connected ? 'Connected' : 'Connect Wallet'}
     </button>
   );
