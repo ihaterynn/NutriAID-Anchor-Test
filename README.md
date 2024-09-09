@@ -43,6 +43,7 @@ If you encounter issues:
    npm install
    ```
 
+
 ## ⚠️ Disclaimer
 
 - NutriAID is a prototype with basic functionalities.
@@ -50,6 +51,9 @@ If you encounter issues:
 - This application is for demonstration and educational purposes only. Do not use it for actual dietary or health decisions.
 
 ## Contributing
+
+
+
 
 To contribute, fork this repository, create a branch, make your changes, and submit a pull request.
 

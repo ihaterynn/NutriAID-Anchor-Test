@@ -6,6 +6,7 @@ const { checkCalories } = require('./main'); // Assuming you have a main module
 const { Connection, PublicKey } = require('@solana/web3.js');
 require('dotenv').config();
 const cors = require('cors');
+const { initializeProgram, analyzeFood } = require('./anchor-client');
 
 const app = express();
 app.use(express.json());  // To parse incoming JSON requests
@@ -48,12 +49,29 @@ app.post('/upload', upload.single('label'), async (req, res) => {
         // Call Solana smart contract to store analysis or recommendations
         
         // Step 5: Send back the response to the client
-        res.json({
+        const analysisPubkey = await analyzeFood(new PublicKey(req.body.publicKey), {
             recommendation: result,
             concerns: labeledWarnings,
             harmfulIngredients: potentialHarmWarnings,
         });
+
+        res.json({
+            recommendation: result,
+            concerns: labeledWarnings,
+            harmfulIngredients: potentialHarmWarnings,
+            analysisPubkey: analysisPubkey.toString(),
+        });
         
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Route for initializing the Solana program
+app.post('/initialize-program', async (req, res) => {
+    try {
+        await initializeProgram();
+        res.json({ success: true });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

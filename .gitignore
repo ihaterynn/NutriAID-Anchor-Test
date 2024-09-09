@@ -1,1 +1,9 @@
-node_modules
+# Ignore node_modules in the root directory
+node_modules/
+
+# Ignore node_modules in backend and frontend directories
+backend/node_modules/
+frontend/node_modules/
+
+# Ignore node_modules in any subdirectory
+**/node_modules/

@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { extractText } from '../utils/imageProcessing';
 import { analyzeIngredients, checkCalories } from '../utils/textAnalysis';
+import { useAnchorWallet } from '@solana/wallet-adapter-react';
+import { analyzeFood } from '../utils/solanaClient';
 
 const UploadComponent = ({ onAnalysisComplete }) => {
+  const wallet = useAnchorWallet();
   const [file, setFile] = useState(null);
   const [healthConditions, setHealthConditions] = useState([]);
   const [weightGoal, setWeightGoal] = useState('maintain');
@@ -26,31 +29,35 @@ const UploadComponent = ({ onAnalysisComplete }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!file) return;
+    if (!file || !wallet) {
+      alert("Please upload a file and connect your wallet.");
+      return;
+    }
 
     try {
-      const text = await extractText(file);
-      const { result, conditionWarnings, potentialHarmWarnings } = analyzeIngredients(text, healthConditions);
-      const calorieWarning = checkCalories(text, weightGoal);
+      const extractedText = await extractText(file);
+      const { result, conditionWarnings, potentialHarmWarnings } = analyzeIngredients(extractedText, healthConditions);
+      const calorieWarning = checkCalories(extractedText, weightGoal);
 
-      const labeledWarnings = [];
-      if (conditionWarnings.includes('sugar')) {
-        labeledWarnings.push('Diabetes (sugar)');
-      }
-      if (conditionWarnings.includes('salt')) {
-        labeledWarnings.push('High Blood Pressure (salt)');
-      }
-      if (calorieWarning) {
-        labeledWarnings.push(calorieWarning);
-      }
+      // Prepare a summary of the analysis to send to Solana
+      const analysisSummary = JSON.stringify({
+        result: result.substring(0, 100), // Limit the length
+        warnings: [...conditionWarnings, calorieWarning, ...potentialHarmWarnings].slice(0, 5).join(', ') // Limit the number of warnings
+      });
+
+      // Send the summary to the Solana program
+      const { data: solanaAnalysis, publicKey: analysisPubkey } = await analyzeFood(analysisSummary);
 
       onAnalysisComplete({
         recommendation: result,
-        concerns: labeledWarnings,
+        concerns: [...conditionWarnings, calorieWarning].filter(Boolean),
         harmfulIngredients: potentialHarmWarnings,
+        solanaAnalysis,
+        analysisPubkey: analysisPubkey.toString()
       });
     } catch (error) {
-      console.error(error);
+      console.error('Error during analysis:', error);
+      alert(`Analysis failed: ${error.message}`);
     }
   };
 
