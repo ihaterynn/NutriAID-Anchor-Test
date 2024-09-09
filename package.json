@@ -1,15 +1,20 @@
 {
-    "name": "nutriaid",
+    "name": "nutriaid-project",
     "version": "1.0.0",
+    "description": "NutriAID project with Solana integration",
     "scripts": {
-        "install": "npm run install:backend && npm run install:frontend",
-        "install:backend": "cd backend && npm install",
-        "install:frontend": "cd frontend && npm install",
-        "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
-        "start:backend": "cd backend && npm start",
-        "start:frontend": "cd frontend && npm start"
+      "install-all": "npm install && npm run install-frontend && npm run install-backend && npm run install-solana",
+      "install-frontend": "cd frontend && npm install",
+      "install-backend": "cd backend && npm install",
+      "install-solana": "cd nutriaid_solana && npm install",
+      "start-frontend": "cd frontend && npm start",
+      "start-backend": "cd backend && npm start",
+      "build-solana": "cd nutriaid_solana && anchor build",
+      "test-solana": "cd nutriaid_solana && anchor test",
+      "start": "concurrently \"npm run start-frontend\" \"npm run start-backend\"",
+      "deploy": "cd frontend && npm run deploy"
     },
     "devDependencies": {
-        "concurrently": "^6.2.0"
+      "concurrently": "^6.2.0"
     }
-}
+  }

@@ -39,10 +39,21 @@ const UploadComponent = ({ onAnalysisComplete }) => {
       const { result, conditionWarnings, potentialHarmWarnings } = analyzeIngredients(extractedText, healthConditions);
       const calorieWarning = checkCalories(extractedText, weightGoal);
 
+      const labeledWarnings = [];
+      if (conditionWarnings.includes('sugar')) {
+        labeledWarnings.push('Diabetes (sugar)');
+      }
+      if (conditionWarnings.includes('salt')) {
+        labeledWarnings.push('High Blood Pressure (salt)');
+      }
+      if (calorieWarning) {
+        labeledWarnings.push(calorieWarning);
+      }
+
       // Prepare a summary of the analysis to send to Solana
       const analysisSummary = JSON.stringify({
         result: result.substring(0, 100), // Limit the length
-        warnings: [...conditionWarnings, calorieWarning, ...potentialHarmWarnings].slice(0, 5).join(', ') // Limit the number of warnings
+        warnings: [...labeledWarnings, ...potentialHarmWarnings].slice(0, 5).join(', ') // Limit the number of warnings
       });
 
       // Send the summary to the Solana program
@@ -50,7 +61,7 @@ const UploadComponent = ({ onAnalysisComplete }) => {
 
       onAnalysisComplete({
         recommendation: result,
-        concerns: [...conditionWarnings, calorieWarning].filter(Boolean),
+        concerns: labeledWarnings,
         harmfulIngredients: potentialHarmWarnings,
         solanaAnalysis,
         analysisPubkey: analysisPubkey.toString()
@@ -62,29 +73,31 @@ const UploadComponent = ({ onAnalysisComplete }) => {
   };
 
   return (
-    <div>
-      <h2>Upload File</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="upload-component">
+      <h2 className="upload-title">Upload File</h2>
+      <div className="file-input-wrapper">
         <input type="file" onChange={handleFileChange} />
-        <div>
-          <label>
+      </div>
+      <form onSubmit={handleSubmit}>
+        <div className="checkbox-group">
+          <div className="checkbox-row">
+            <label>Diabetes</label>
             <input
               type="checkbox"
               value="diabetes"
               onChange={handleHealthConditionChange}
             />
-            Diabetes
-          </label>
-          <label>
+          </div>
+          <div className="checkbox-row">
+            <label>High Blood Pressure</label>
             <input
               type="checkbox"
               value="high blood pressure"
               onChange={handleHealthConditionChange}
             />
-            High Blood Pressure
-          </label>
+          </div>
         </div>
-        <div>
+        <div className="weight-goal">
           <label>Weight Goal:</label>
           <select value={weightGoal} onChange={handleWeightGoalChange}>
             <option value="maintain">Maintain</option>
