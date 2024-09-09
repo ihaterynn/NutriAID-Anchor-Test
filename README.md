@@ -19,20 +19,28 @@
 <h2>🚀 Installation and Running</h2>
 <ol>
     <li>Clone the repository and navigate to the project directory.</li>
+    <br>
     <li>Install all dependencies:
         <pre><code>npm run install-all</code></pre>
     </li>
+    <br>
     <li>Build the Solana program:
         <pre><code>npm run build-solana</code></pre>
     </li>
+    <br>
     <li>Start the development servers:
         <pre><code>npm start</code></pre>
         This will start both the frontend and backend servers concurrently.
+        Open your web browser and go to <a href="http://localhost:3000">http://localhost:3000</a> to use the application.</li>
+    <br>
+    <li>To deploy the frontend to GitHub Pages: 
+    <pre><code>npm run deploy</code></pre>
+    GitHub Pages: 
+    <a href="https://ihaterynn.github.io/NutriAID/" target="_blank">
+        https://ihaterynn.github.io/NutriAID/
+    </a>
     </li>
-    <li>Open your web browser and go to <a href="http://localhost:3000">http://localhost:3000</a> to use the application.</li>
-    <li>To deploy the frontend to GitHub Pages:
-        <pre><code>npm run deploy</code></pre>
-    </li>
+
 </ol>
 
 <h2>🥗 Usage</h2>
