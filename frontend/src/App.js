@@ -15,11 +15,13 @@ const WalletConnectButton = () => {
 
   const handleConnect = async () => {
     console.log("Attempting to connect...");
-    try {
-      await connect();
-      console.log("Connection successful");
-    } catch (error) {
-      console.error("Connection failed:", error);
+    if (!connected) {
+      try {
+        await connect();
+        console.log("Connection successful");
+      } catch (error) {
+        console.error("Connection failed:", error);
+      }
     }
   };
 
@@ -37,7 +39,7 @@ function App() {
 
   return (
     <ConnectionProvider endpoint={endpoint}>
-      <WalletProvider wallets={wallets} autoConnect>
+      <WalletProvider wallets={wallets} autoConnect={false}>
         <WalletModalProvider>
           <div className="App">
             <WalletConnectButton />
