@@ -13,10 +13,10 @@ const UploadComponent = ({ onAnalysisComplete }) => {
 
   const handleHealthConditionChange = (e) => {
     const condition = e.target.value;
-    setHealthConditions(prev => 
-      e.target.checked 
-        ? [...prev, condition] 
-        : prev.filter(c => c !== condition)
+    setHealthConditions((prev) =>
+      e.target.checked
+        ? [...prev, condition]
+        : prev.filter((c) => c !== condition)
     );
   };
 
@@ -30,7 +30,8 @@ const UploadComponent = ({ onAnalysisComplete }) => {
 
     try {
       const text = await extractText(file);
-      const { result, conditionWarnings, potentialHarmWarnings } = analyzeIngredients(text, healthConditions);
+      const { result, conditionWarnings, potentialHarmWarnings } =
+        analyzeIngredients(text, healthConditions);
       const calorieWarning = checkCalories(text, weightGoal);
 
       const labeledWarnings = [];
@@ -55,29 +56,35 @@ const UploadComponent = ({ onAnalysisComplete }) => {
   };
 
   return (
-    <div>
-      <h2>Upload File</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="upload-component">
+      {/* Center the Upload File header */}
+      <h2 className="upload-title">Upload File</h2>
+
+      {/* Move the file input outside of the form */}
+      <div className="file-input-wrapper">
         <input type="file" onChange={handleFileChange} />
-        <div>
-          <label>
+      </div>
+
+      <form onSubmit={handleSubmit}>
+        <div className="checkbox-group">
+          <div className="checkbox-row">
+            <label>Diabetes</label>
             <input
               type="checkbox"
               value="diabetes"
               onChange={handleHealthConditionChange}
             />
-            Diabetes
-          </label>
-          <label>
+          </div>
+          <div className="checkbox-row">
+            <label>High Blood Pressure</label>
             <input
               type="checkbox"
               value="high blood pressure"
               onChange={handleHealthConditionChange}
             />
-            High Blood Pressure
-          </label>
+          </div>
         </div>
-        <div>
+        <div className="weight-goal">
           <label>Weight Goal:</label>
           <select value={weightGoal} onChange={handleWeightGoalChange}>
             <option value="maintain">Maintain</option>

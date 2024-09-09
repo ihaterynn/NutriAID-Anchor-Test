@@ -11,5 +11,8 @@
     },
     "devDependencies": {
         "concurrently": "^6.2.0"
+    },
+    "dependencies": {
+        "react-router-dom": "^6.26.1"
     }
 }
