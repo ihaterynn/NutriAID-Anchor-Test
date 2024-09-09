@@ -1,15 +1,12 @@
 {
   "files": {
-    "main.css": "/NutriAID/static/css/main.e6c13ad2.css",
-    "main.js": "/NutriAID/static/js/main.03905704.js",
-    "static/js/453.c5fc21a4.chunk.js": "/NutriAID/static/js/453.c5fc21a4.chunk.js",
-    "index.html": "/NutriAID/index.html",
-    "main.e6c13ad2.css.map": "/NutriAID/static/css/main.e6c13ad2.css.map",
-    "main.03905704.js.map": "/NutriAID/static/js/main.03905704.js.map",
-    "453.c5fc21a4.chunk.js.map": "/NutriAID/static/js/453.c5fc21a4.chunk.js.map"
+    "main.css": "/NutriAID/static/css/main.74a1749d.css",
+    "main.js": "/NutriAID/static/js/main.e5353a68.js",
+    "static/js/206.b172a80a.chunk.js": "/NutriAID/static/js/206.b172a80a.chunk.js",
+    "index.html": "/NutriAID/index.html"
   },
   "entrypoints": [
-    "static/css/main.e6c13ad2.css",
-    "static/js/main.03905704.js"
+    "static/css/main.74a1749d.css",
+    "static/js/main.e5353a68.js"
   ]
 }
