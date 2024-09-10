@@ -10,8 +10,9 @@ import AnalysisPage from './pages/AnalysisPage';
 
 require('@solana/wallet-adapter-react-ui/styles.css');
 
+// This component handles wallet connection via the Phantom wallet.
 const WalletConnectButton = () => {
-  const { connect, connected } = useWallet();
+  const { connect, disconnect, connected } = useWallet();
 
   const handleConnect = async () => {
     console.log("Attempting to connect...");
@@ -25,16 +26,30 @@ const WalletConnectButton = () => {
     }
   };
 
+  const handleDisconnect = async () => {
+    if (connected) {
+      await disconnect();
+      console.log("Disconnected from wallet");
+    }
+  };
+
   return (
-    <button onClick={handleConnect} disabled={connected}>
-      {connected ? 'Connected' : 'Connect Wallet'}
-    </button>
+    <div>
+      <button onClick={handleConnect} disabled={connected}>
+        {connected ? 'Connected' : 'Connect Wallet'}
+      </button>
+      {connected && <button onClick={handleDisconnect}>Disconnect</button>}
+    </div>
   );
 };
 
 function App() {
+  // Set network to Devnet (or Mainnet if you're ready for production)
   const network = WalletAdapterNetwork.Devnet;
+  // Define endpoint using Solana's cluster API URL
   const endpoint = useMemo(() => clusterApiUrl(network), [network]);
+
+  // Initialize the Phantom wallet adapter
   const wallets = useMemo(() => [new PhantomWalletAdapter()], []);
 
   return (
