@@ -5,12 +5,43 @@ NutriAID is a React application that helps users make informed dietary choices b
 ## Prerequisites
 
 - Windows Subsystem for Linux (WSL) or a Linux/macOS environment
-- Node.js (v14 or later)
+- Node.js (v16 or later)
 - npm (usually comes with Node.js)
+- Visual Studio Code with Remote - WSL extension installed
 
 ## Quick Start
 
-For Windows users with WSL installed, or Linux/macOS users:
+For Windows users with WSL installed:
+
+1. Open WSL terminal (Windows PowerShell or Command Prompt):
+   ```
+   wsl
+   ```
+
+2. Navigate to your project directory:
+   ```
+   cd /mnt/c/Users/YourUsername/path/to/NutriAID
+   ```
+
+3. Open the project in Visual Studio Code:
+   ```
+   code .
+   ```
+   This will open VS Code with WSL integration. If prompted, install the Remote - WSL extension in VS Code.
+
+4. In the VS Code terminal (which should now be a WSL terminal), run the setup script:
+   ```
+   npm run setup
+   ```
+
+5. Start the development servers:
+   ```
+   npm start
+   ```
+
+6. Open your web browser and go to http://localhost:3000 to use the application.
+
+For Linux/macOS users:
 
 1. Clone the repository:
    ```
