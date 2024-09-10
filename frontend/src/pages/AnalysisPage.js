@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useWallet } from '@solana/wallet-adapter-react';
 import UploadComponent from '../components/UploadComponent'; // Reusable component
 import './AnalysisPage.css'; // Specific styles for AnalysisPage
 
 function AnalysisPage() {
   const [analysisResult, setAnalysisResult] = useState(null);
+  const { connected } = useWallet();
 
   const handleAnalysisComplete = (result) => {
     setAnalysisResult(result);
@@ -11,6 +13,19 @@ function AnalysisPage() {
   };
 
   console.log("Rendering AnalysisPage");
+
+  if (!connected) {
+    return (
+      <div className="analysis-page">
+        <header>
+          <h1>NutriAID: Analyze Food Labels</h1>
+        </header>
+        <main>
+          <p>Please connect your wallet to use this feature.</p>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="analysis-page">

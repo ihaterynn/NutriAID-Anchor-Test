@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { extractText } from '../utils/imageProcessing';
 import { analyzeIngredients, checkCalories } from '../utils/textAnalysis';
-import { useAnchorWallet } from '@solana/wallet-adapter-react';
+import { useAnchorWallet, useWallet, useConnection } from '@solana/wallet-adapter-react';
 import { analyzeFood } from '../utils/solanaClient';
 
 const UploadComponent = ({ onAnalysisComplete }) => {
-  const wallet = useAnchorWallet();
+  const anchorWallet = useAnchorWallet();
+  const { publicKey, connected } = useWallet();
+  const { connection } = useConnection();
   const [file, setFile] = useState(null);
   const [healthConditions, setHealthConditions] = useState([]);
   const [weightGoal, setWeightGoal] = useState('maintain');
+
+  useEffect(() => {
+    console.log("Wallet connection status:", connected);
+    console.log("Public key:", publicKey?.toString());
+  }, [connected, publicKey]);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -29,7 +36,7 @@ const UploadComponent = ({ onAnalysisComplete }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!file || !wallet) {
+    if (!file || !connected || !publicKey || !anchorWallet) {
       alert("Please upload a file and connect your wallet.");
       return;
     }
@@ -50,14 +57,12 @@ const UploadComponent = ({ onAnalysisComplete }) => {
         labeledWarnings.push(calorieWarning);
       }
 
-      // Prepare a summary of the analysis to send to Solana
       const analysisSummary = JSON.stringify({
-        result: result.substring(0, 100), // Limit the length
-        warnings: [...labeledWarnings, ...potentialHarmWarnings].slice(0, 5).join(', ') // Limit the number of warnings
+        result: result.substring(0, 100),
+        warnings: [...labeledWarnings, ...potentialHarmWarnings].slice(0, 5).join(', ')
       });
 
-      // Send the summary to the Solana program
-      const { data: solanaAnalysis, publicKey: analysisPubkey } = await analyzeFood(analysisSummary);
+      const { data: solanaAnalysis, publicKey: analysisPubkey } = await analyzeFood(analysisSummary, anchorWallet, connection);
 
       onAnalysisComplete({
         recommendation: result,
