@@ -13,7 +13,10 @@
     "build-solana": "cd nutriaid_solana && anchor build",
     "test-solana": "cd nutriaid_solana && anchor test",
     "start": "concurrently \"npm run start-frontend\" \"npm run start-backend\"",
-    "deploy": "cd frontend && npm run deploy"
+    "deploy": "cd frontend && npm run deploy",
+    "docker-build": "docker-compose build",
+    "docker-up": "docker-compose up",
+    "docker-down": "docker-compose down"
   },
   "devDependencies": {
     "concurrently": "^7.6.0"

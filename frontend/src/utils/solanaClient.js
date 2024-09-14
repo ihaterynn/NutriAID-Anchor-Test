@@ -1,6 +1,7 @@
 import { PublicKey } from '@solana/web3.js';
 import { Program, AnchorProvider, web3 } from '@project-serum/anchor';
 import idl from './nutriaid_solana.json';
+import apiUrl from '../config/api';
 
 const programID = new PublicKey('Bq4QmQrY2Cys6hSVAatYsWTbbrJczFsxVWQYTaUhoX65');
 const opts = {
@@ -18,14 +19,15 @@ export const analyzeFood = async (analysisSummary, wallet, connection) => {
   const foodAnalysis = web3.Keypair.generate();
 
   try {
-    await program.methods.analyzeFood(analysisSummary)
-      .accounts({
-        user: wallet.publicKey,
-        foodAnalysis: foodAnalysis.publicKey,
-        systemProgram: web3.SystemProgram.programId,
-      })
-      .signers([foodAnalysis])
-      .rpc();
+    // Make API call to backend
+    const response = await fetch(`${apiUrl}/analyze-food`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ analysisSummary }),
+    });
+    const result = await response.json();
 
     const account = await program.account.analysis.fetch(foodAnalysis.publicKey);
     return {
