@@ -2,6 +2,14 @@
 
 NutriAID is a React application that helps users make informed dietary choices by analyzing food labels using Optical Character Recognition (OCR) and Solana blockchain integration.
 
+## Deployment
+
+To deploy the frontend to GitHub 
+Run: 
+npm run deploy
+<br>
+Visit GitHub Pages: https://ihaterynn.github.io/NutriAID
+
 ## Prerequisites
 
 - Windows Subsystem for Linux (WSL) or a Linux/macOS environment
@@ -86,12 +94,6 @@ If the quick start doesn't work for you, follow these steps:
    ```
    npm start
    ```
-
-## Deployment
-
-To deploy the frontend to GitHub Pages:
-npm run deploy
-GitHub Pages: https://ihaterynn.github.io/NutriAID/ 
 
 
 ## Troubleshooting
