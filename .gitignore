@@ -9,5 +9,3 @@ frontend/node_modules
 **/node_modules/
 
 .dockerignore
-Dockerfile
-docker-compose.yml

@@ -8,100 +8,71 @@ error() {
     exit 1
 }
 
-# Detect and convert Windows line endings if necessary
-if [[ "$(head -c 2 "$0")" == $'\r\n' ]]; then
-    echo "Converting Windows line endings to Unix..."
-    sed -i 's/\r$//' "$0"
-    exec bash "$0" "$@"
-fi
+# Check for necessary tools
+command -v curl >/dev/null 2>&1 || error "curl is required but not installed."
+command -v git >/dev/null 2>&1 || error "git is required but not installed."
 
-# Check for WSL
-if ! grep -qi microsoft /proc/version; then
-    error "This script is designed for WSL. Please run in a WSL environment or adapt for your OS."
-fi
-
-echo "WSL detected. Proceeding with setup..."
-
-# Update and upgrade packages
-echo "Updating and upgrading packages..."
-sudo apt update && sudo apt upgrade -y
-
-# Install Node.js v16 using nvm
-echo "Installing Node.js v16..."
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-source ~/.nvm/nvm.sh
-nvm install 16
-nvm use 16
-
-# Install Rust
-echo "Installing Rust..."
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-source $HOME/.cargo/env
-
-# Update Rust and install required components
-rustup update
-rustup component add rustfmt clippy
-
-# Install Solana CLI (version 1.16.18)
-echo "Installing Solana CLI v1.16.18..."
-sh -c "$(curl -sSfL https://release.solana.com/v1.16.18/install)"
-
-# Update PATH
-echo "Updating PATH..."
-export PATH="/root/.local/share/solana/install/active_release/bin:$PATH"
-echo 'export PATH="/root/.local/share/solana/install/active_release/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc
-
-# Install or update Anchor
-echo "Installing or updating Anchor..."
-if command -v avm &> /dev/null; then
-    echo "AVM (Anchor Version Manager) is already installed. Updating Anchor..."
-    avm update
-    avm use latest
+# Install Rust 1.75.0
+if ! command -v rustc >/dev/null 2>&1; then
+    echo "Installing Rust 1.75.0..."
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.75.0
+    source $HOME/.cargo/env
 else
-    echo "Installing AVM and latest Anchor..."
-    cargo install --git https://github.com/coral-xyz/anchor avm --locked
-    avm install latest
-    avm use latest
+    echo "Rust is already installed. Ensuring version 1.75.0..."
+    rustup default 1.75.0
+fi
+
+# Install Solana CLI version 1.16.18
+if ! command -v solana >/dev/null 2>&1; then
+    echo "Installing Solana CLI 1.16.18..."
+    sh -c "$(curl -sSfL https://release.solana.com/v1.16.18/install)"
+    export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
+else
+    echo "Solana CLI is already installed. Ensuring version 1.16.18..."
+    solana-install update --version 1.16.18
+fi
+
+# Install Anchor CLI version 0.26.0
+if ! command -v anchor >/dev/null 2>&1; then
+    echo "Installing Anchor CLI 0.26.0..."
+    cargo install --git https://github.com/coral-xyz/anchor --tag v0.26.0 anchor-cli --locked
+else
+    echo "Anchor CLI is already installed. Ensuring version 0.26.0..."
+    cargo install --git https://github.com/coral-xyz/anchor --tag v0.26.0 anchor-cli --locked --force
+fi
+
+# Install Node.js 16.x
+if ! command -v node >/dev/null 2>&1; then
+    echo "Installing Node.js 16.x..."
+    curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+    sudo apt-get install -y nodejs
+else
+    echo "Node.js is already installed. Ensuring version 16.x..."
+    sudo n 16
 fi
 
 # Verify installations
 echo "Verifying installations..."
-node --version || error "Node.js installation failed"
+rustc --version | grep "1.75.0" || error "Rust 1.75.0 installation failed"
+solana --version | grep "1.16.18" || error "Solana 1.16.18 installation failed"
+anchor --version | grep "0.26.0" || error "Anchor 0.26.0 installation failed"
+node --version | grep "v16" || error "Node.js 16.x installation failed"
 npm --version || error "npm installation failed"
-cargo --version || error "Cargo installation failed"
-solana --version || error "Solana installation failed"
-anchor --version || error "Anchor installation failed"
 
-# Setup Solana wallet
-echo "Setting up Solana wallet..."
-solana-keygen new --no-bip39-passphrase
-
-# Clean up existing node_modules and package-lock.json
-echo "Cleaning up existing node_modules and package-lock.json..."
-rm -rf node_modules package-lock.json
-cd frontend && rm -rf node_modules package-lock.json && cd ..
-cd backend && rm -rf node_modules package-lock.json && cd ..
-cd nutriaid_solana && rm -rf node_modules package-lock.json && cd ..
+# Update Cargo.toml in the Solana program directory
+echo "Updating Cargo.toml..."
+sed -i 's/^solana-program = .*/solana-program = "~1.16.18"/' nutriaid_solana/programs/nutriaid_solana/Cargo.toml
 
 # Install project dependencies
 echo "Installing project dependencies..."
-npm install
-
-# Install frontend dependencies
-echo "Installing frontend dependencies..."
-cd frontend && npm install && cd ..
-
-# Install backend dependencies
-echo "Installing backend dependencies..."
-cd backend && npm install && cd ..
-
-# Install Solana program dependencies
-echo "Installing Solana program dependencies..."
-cd nutriaid_solana && npm install && cd ..
+npm run install-all
 
 # Build Solana program
 echo "Building Solana program..."
-cd nutriaid_solana && anchor build && cd ..
+cd nutriaid_solana && cargo update && anchor build && cd ..
+
+# Build frontend
+echo "Building frontend..."
+cd frontend && npm run build && cd ..
 
 echo "Setup complete! You can now run 'npm start' to launch the application."
